@@ -35,6 +35,10 @@ public class Usuario {
     @Column(name = "senha", nullable = false, length = 200)
     private String senha;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role", nullable = false, length = 20)
+    private Role role;
+
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Perfil perfil;
 }

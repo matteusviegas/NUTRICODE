@@ -1,7 +1,9 @@
 package br.com.challenge.nutricode.projectNutricode.service;
 
+import br.com.challenge.nutricode.projectNutricode.domain.model.Role;
 import br.com.challenge.nutricode.projectNutricode.domain.model.Usuario;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,12 +14,18 @@ import java.util.Optional;
 public class UsuarioService {
 
     private final br.com.challenge.nutricode.projectNutricode.domain.repository.UsuarioRepository usuarioRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public Usuario salvar(Usuario usuario) {
         if (usuarioRepository.existsByEmail(usuario.getEmail())) {
             throw new RuntimeException("Email já cadastrado");
         }
 
+        if (usuario.getRole() == null) {
+            usuario.setRole(Role.ROLE_USER);
+        }
+
+        usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
         return usuarioRepository.save(usuario);
     }
 
@@ -39,7 +47,14 @@ public class UsuarioService {
 
         usuarioExistente.setNome(usuario.getNome());
         usuarioExistente.setEmail(usuario.getEmail());
-        usuarioExistente.setSenha(usuario.getSenha());
+
+        if (usuario.getRole() != null) {
+            usuarioExistente.setRole(usuario.getRole());
+        }
+
+        if (usuario.getSenha() != null && !usuario.getSenha().isBlank()) {
+            usuarioExistente.setSenha(passwordEncoder.encode(usuario.getSenha()));
+        }
 
         return usuarioRepository.save(usuarioExistente);
     }
