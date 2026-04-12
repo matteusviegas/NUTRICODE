@@ -2,6 +2,7 @@ package br.com.challenge.nutricode.projectNutricode.presentation.dto.controller;
 
 import br.com.challenge.nutricode.projectNutricode.domain.model.Receita;
 import br.com.challenge.nutricode.projectNutricode.presentation.dto.ReceitaDTO;
+import br.com.challenge.nutricode.projectNutricode.presentation.dto.ReceitaResumoDTO;
 import br.com.challenge.nutricode.projectNutricode.service.ReceitaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -31,6 +32,13 @@ public class ReceitaController {
     public ResponseEntity<ReceitaDTO> buscarPorId(@PathVariable Long id) {
         return receitaService.buscarPorId(id)
                 .map(receita -> ResponseEntity.ok(ReceitaDTO.fromEntity(receita)))
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/public/{id}/resumo")
+    public ResponseEntity<ReceitaResumoDTO> buscarResumoPorId(@PathVariable Long id) {
+        return receitaService.buscarPorId(id)
+                .map(receita -> ResponseEntity.ok(ReceitaResumoDTO.fromEntity(receita)))
                 .orElse(ResponseEntity.notFound().build());
     }
 

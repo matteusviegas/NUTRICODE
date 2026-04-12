@@ -14,7 +14,7 @@ import java.util.Optional;
 public class CondicaoMedicaService {
 
     private final CondicaoMedicaRepository condicaoRepository;
-    private final br.com.challenge.nutricode.projectNutricode.domain.repository.UsuarioRepository usuarioRepository;
+    private final br.com.challenge.nutricode.projectNutricode.domain.model.repository.UsuarioRepository usuarioRepository;
 
     public CondicaoMedica salvar(CondicaoMedica condicao) {
         if (condicao.getUsuario() == null || condicao.getUsuario().getId() == null) {

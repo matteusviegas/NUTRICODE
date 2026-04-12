@@ -14,7 +14,7 @@ import java.util.Optional;
 public class PerfilService {
 
     private final PerfilRepository perfilRepository;
-    private final br.com.challenge.nutricode.projectNutricode.domain.repository.UsuarioRepository usuarioRepository;
+    private final br.com.challenge.nutricode.projectNutricode.domain.model.repository.UsuarioRepository usuarioRepository;
 
     public Perfil salvar(Perfil perfil) {
         if (perfil.getUsuario() == null || perfil.getUsuario().getId() == null) {

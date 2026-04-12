@@ -1,4 +1,4 @@
-package br.com.challenge.nutricode.projectNutricode.presentation.controller;
+package br.com.challenge.nutricode.projectNutricode.presentation.dto.controller;
 
 import br.com.challenge.nutricode.projectNutricode.domain.model.HistoricoConsumo;
 import br.com.challenge.nutricode.projectNutricode.presentation.dto.HistoricoConsumoDTO;

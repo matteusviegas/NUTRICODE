@@ -14,7 +14,7 @@ import java.util.Optional;
 public class PreferenciaAlimentarService {
 
     private final PreferenciaAlimentarRepository preferenciaRepository;
-    private final br.com.challenge.nutricode.projectNutricode.domain.repository.UsuarioRepository usuarioRepository;
+    private final br.com.challenge.nutricode.projectNutricode.domain.model.repository.UsuarioRepository usuarioRepository;
 
     public PreferenciaAlimentar salvar(PreferenciaAlimentar preferencia) {
         if (preferencia.getUsuario() == null || preferencia.getUsuario().getId() == null) {

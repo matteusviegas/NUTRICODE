@@ -16,7 +16,7 @@ import java.util.Optional;
 public class AvaliacaoReceitaService {
 
     private final AvaliacaoReceitaRepository avaliacaoRepository;
-    private final br.com.challenge.nutricode.projectNutricode.domain.repository.UsuarioRepository usuarioRepository;
+    private final br.com.challenge.nutricode.projectNutricode.domain.model.repository.UsuarioRepository usuarioRepository;
     private final ReceitaRepository receitaRepository;
 
     public AvaliacaoReceita salvar(AvaliacaoReceita avaliacao) {

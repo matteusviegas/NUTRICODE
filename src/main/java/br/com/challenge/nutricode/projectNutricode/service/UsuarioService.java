@@ -13,7 +13,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UsuarioService {
 
-    private final br.com.challenge.nutricode.projectNutricode.domain.repository.UsuarioRepository usuarioRepository;
+    private final br.com.challenge.nutricode.projectNutricode.domain.model.repository.UsuarioRepository usuarioRepository;
     private final PasswordEncoder passwordEncoder;
 
     public Usuario salvar(Usuario usuario) {
