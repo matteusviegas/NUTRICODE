@@ -7,6 +7,7 @@ import br.com.challenge.nutricode.projectNutricode.domain.model.repository.Histo
 import br.com.challenge.nutricode.projectNutricode.domain.model.repository.ReceitaRepository;
 import br.com.challenge.nutricode.projectNutricode.domain.model.repository.UsuarioRepository;
 import br.com.challenge.nutricode.projectNutricode.integration.client.ReceitaClient;
+import br.com.challenge.nutricode.projectNutricode.messaging.HistoricoProducer;
 import br.com.challenge.nutricode.projectNutricode.presentation.dto.ReceitaResumoDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,7 @@ public class HistoricoConsumoService {
     private final UsuarioRepository usuarioRepository;
     private final ReceitaRepository receitaRepository;
     private final ReceitaClient receitaClient;
+    private final HistoricoProducer historicoProducer;
 
     public HistoricoConsumo salvar(HistoricoConsumo historico) {
         if (historico.getUsuario() == null || historico.getUsuario().getId() == null) {
@@ -47,7 +49,15 @@ public class HistoricoConsumoService {
         historico.setUsuario(usuario);
         historico.setReceita(receita);
 
-        return historicoRepository.save(historico);
+        HistoricoConsumo historicoSalvo = historicoRepository.save(historico);
+
+        String mensagem = "Histórico criado -> usuário: " + usuario.getEmail()
+                + ", receita: " + resumoReceita.getNome()
+                + ", quantidade: " + historico.getQuantidade();
+
+        historicoProducer.enviarMensagem(mensagem);
+
+        return historicoSalvo;
     }
 
     public List<HistoricoConsumo> listarTodos() {
