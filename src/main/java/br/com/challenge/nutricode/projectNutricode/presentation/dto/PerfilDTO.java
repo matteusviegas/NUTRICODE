@@ -1,8 +1,11 @@
 package br.com.challenge.nutricode.projectNutricode.presentation.dto;
 
+import java.math.BigDecimal;
+
 import br.com.challenge.nutricode.projectNutricode.domain.model.Perfil;
 import jakarta.validation.Valid;
 import lombok.*;
+
 @Valid
 @Getter
 @Setter
@@ -13,8 +16,8 @@ public class PerfilDTO {
 
     private Long id;
     private Integer idade;
-    private Double peso;
-    private Double altura;
+    private BigDecimal peso;
+    private BigDecimal altura;
     private String objetivo;
     private Long usuarioId;
 

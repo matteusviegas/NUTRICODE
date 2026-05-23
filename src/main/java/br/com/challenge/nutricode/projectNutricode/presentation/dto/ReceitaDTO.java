@@ -1,9 +1,12 @@
 package br.com.challenge.nutricode.projectNutricode.presentation.dto;
 
+import java.math.BigDecimal;
+
 import br.com.challenge.nutricode.projectNutricode.domain.model.CategoriaReceita;
 import br.com.challenge.nutricode.projectNutricode.domain.model.Receita;
 import jakarta.validation.Valid;
 import lombok.*;
+
 @Valid
 @Getter
 @Setter
@@ -17,10 +20,10 @@ public class ReceitaDTO {
     private String descricao;
     private String modoPreparo;
     private Integer tempoPreparo;
-    private Double valorCalorico;
-    private Double proteinaTotal;
-    private Double carboTotal;
-    private Double gorduraTotal;
+    private BigDecimal valorCalorico;
+    private BigDecimal proteinaTotal;
+    private BigDecimal carboTotal;
+    private BigDecimal gorduraTotal;
     private String indiceGlicemico;
     private Long categoriaId;
 
@@ -62,4 +65,5 @@ public class ReceitaDTO {
 
         return receita;
     }
+
 }

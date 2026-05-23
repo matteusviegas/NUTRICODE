@@ -4,7 +4,6 @@ import br.com.challenge.nutricode.projectNutricode.infrastructure.config.securit
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -34,26 +33,21 @@ public class SecurityConfig {
                                 "/swagger-ui/**",
                                 "/swagger-ui.html",
                                 "/v3/api-docs/**",
-                                "/api/receitas/public/**",
-                                "/api/historicos-consumo/**"
+
+                                // Rotas liberadas para teste da Sprint
+                                "/api/usuarios/**",
+                                "/api/categorias-receita/**",
+                                "/api/receitas/**",
+                                "/api/ingredientes/**",
+                                "/api/perfis/**",
+                                "/api/preferencias-alimentares/**",
+                                "/api/condicoes-medicas/**",
+                                "/api/avaliacoes-receita/**",
+                                "/api/historicos-consumo/**",
+                                "/api/receita-ingredientes/**"
                         ).permitAll()
 
-                        .requestMatchers(HttpMethod.POST, "/api/usuarios").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/categorias-receita").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/receitas").permitAll()
-
-                        .requestMatchers("/api/categorias-receita/**").hasRole("ADMIN")
-                        .requestMatchers("/api/ingredientes/**").hasRole("ADMIN")
-                        .requestMatchers("/api/receitas/**").hasRole("ADMIN")
-
-                        .requestMatchers("/api/perfis/**").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers("/api/preferencias-alimentares/**").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers("/api/condicoes-medicas/**").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers("/api/avaliacoes-receita/**").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers("/api/historicos-consumo/**").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers("/api/receita-ingredientes/**").hasAnyRole("USER", "ADMIN")
-
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())

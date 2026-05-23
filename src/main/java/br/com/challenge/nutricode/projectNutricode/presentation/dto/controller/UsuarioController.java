@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.List;
 
@@ -40,6 +42,15 @@ public class UsuarioController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @Operation(summary = "Recupera dados do usuário autenticado")
+    @GetMapping("/me")
+    public ResponseEntity<UsuarioDTO> buscarPorUsuarioAutenticado(
+            @AuthenticationPrincipal UserDetails usuarioAutenticado) {
+        return usuarioService.buscarPorEmail(usuarioAutenticado.getUsername())
+                .map(usuario -> ResponseEntity.ok(UsuarioDTO.fromEntity(usuario)))
+                .orElse(ResponseEntity.notFound().build());
+    }
+
     @Operation(summary = "Cadastrar novo usuário")
     @PostMapping
     public ResponseEntity<UsuarioDTO> salvar(@Valid @RequestBody UsuarioDTO usuarioDTO) {
@@ -50,7 +61,7 @@ public class UsuarioController {
     @Operation(summary = "Atualizar usuário")
     @PutMapping("/{id}")
     public ResponseEntity<UsuarioDTO> atualizar(@PathVariable Long id,
-                                                @Valid @RequestBody UsuarioDTO usuarioDTO) {
+            @Valid @RequestBody UsuarioDTO usuarioDTO) {
         if (!usuarioService.existsById(id)) {
             return ResponseEntity.notFound().build();
         }

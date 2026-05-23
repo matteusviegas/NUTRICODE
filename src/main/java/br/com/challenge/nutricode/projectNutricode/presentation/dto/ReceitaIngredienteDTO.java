@@ -1,7 +1,10 @@
 package br.com.challenge.nutricode.projectNutricode.presentation.dto;
 
+import java.math.BigDecimal;
+
 import jakarta.validation.Valid;
 import lombok.*;
+
 @Valid
 @Getter
 @Setter
@@ -12,5 +15,6 @@ public class ReceitaIngredienteDTO {
 
     private Long receitaId;
     private Long ingredienteId;
-    private Double quantidade;
+    private BigDecimal quantidade;
+
 }

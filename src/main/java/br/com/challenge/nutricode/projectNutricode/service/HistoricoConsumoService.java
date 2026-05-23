@@ -6,9 +6,6 @@ import br.com.challenge.nutricode.projectNutricode.domain.model.Usuario;
 import br.com.challenge.nutricode.projectNutricode.domain.model.repository.HistoricoConsumoRepository;
 import br.com.challenge.nutricode.projectNutricode.domain.model.repository.ReceitaRepository;
 import br.com.challenge.nutricode.projectNutricode.domain.model.repository.UsuarioRepository;
-import br.com.challenge.nutricode.projectNutricode.integration.client.ReceitaClient;
-import br.com.challenge.nutricode.projectNutricode.messaging.HistoricoProducer;
-import br.com.challenge.nutricode.projectNutricode.presentation.dto.ReceitaResumoDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,8 +19,6 @@ public class HistoricoConsumoService {
     private final HistoricoConsumoRepository historicoRepository;
     private final UsuarioRepository usuarioRepository;
     private final ReceitaRepository receitaRepository;
-    private final ReceitaClient receitaClient;
-    private final HistoricoProducer historicoProducer;
 
     public HistoricoConsumo salvar(HistoricoConsumo historico) {
         if (historico.getUsuario() == null || historico.getUsuario().getId() == null) {
@@ -40,22 +35,10 @@ public class HistoricoConsumoService {
         Receita receita = receitaRepository.findById(historico.getReceita().getId())
                 .orElseThrow(() -> new RuntimeException("Receita não encontrada"));
 
-        ReceitaResumoDTO resumoReceita = receitaClient.buscarResumo(receita.getId());
-
-        if (resumoReceita == null) {
-            throw new RuntimeException("Não foi possível consultar a receita via Feign");
-        }
-
         historico.setUsuario(usuario);
         historico.setReceita(receita);
 
         HistoricoConsumo historicoSalvo = historicoRepository.save(historico);
-
-        String mensagem = "Histórico criado -> usuário: " + usuario.getEmail()
-                + ", receita: " + resumoReceita.getNome()
-                + ", quantidade: " + historico.getQuantidade();
-
-        historicoProducer.enviarMensagem(mensagem);
 
         return historicoSalvo;
     }
@@ -89,4 +72,5 @@ public class HistoricoConsumoService {
     public void deletar(Long id) {
         historicoRepository.deleteById(id);
     }
+
 }

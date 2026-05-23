@@ -30,9 +30,7 @@ public class AuthController {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),
-                        request.getSenha()
-                )
-        );
+                        request.getSenha()));
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(request.getEmail());
         String token = jwtService.gerarToken(userDetails.getUsername());

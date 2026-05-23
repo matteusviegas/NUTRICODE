@@ -1,5 +1,7 @@
 package br.com.challenge.nutricode.projectNutricode.presentation.dto;
 
+import java.math.BigDecimal;
+
 import br.com.challenge.nutricode.projectNutricode.domain.model.Receita;
 import lombok.*;
 
@@ -12,10 +14,10 @@ public class ReceitaResumoDTO {
 
     private Long id;
     private String nome;
-    private Double valorCalorico;
-    private Double proteinaTotal;
-    private Double carboTotal;
-    private Double gorduraTotal;
+    private BigDecimal valorCalorico;
+    private BigDecimal proteinaTotal;
+    private BigDecimal carboTotal;
+    private BigDecimal gorduraTotal;
 
     public static ReceitaResumoDTO fromEntity(Receita receita) {
         return ReceitaResumoDTO.builder()
@@ -27,4 +29,5 @@ public class ReceitaResumoDTO {
                 .gorduraTotal(receita.getGorduraTotal())
                 .build();
     }
+
 }

@@ -1,5 +1,8 @@
 package br.com.challenge.nutricode.projectNutricode.domain.model;
 
+import java.math.BigDecimal;
+import java.util.Objects;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -30,16 +33,16 @@ public class Receita {
     private Integer tempoPreparo;
 
     @Column(name = "valor_calorico")
-    private Double valorCalorico;
+    private BigDecimal valorCalorico;
 
     @Column(name = "proteina_total")
-    private Double proteinaTotal;
+    private BigDecimal proteinaTotal;
 
     @Column(name = "carbo_total")
-    private Double carboTotal;
+    private BigDecimal carboTotal;
 
     @Column(name = "gordura_total")
-    private Double gorduraTotal;
+    private BigDecimal gorduraTotal;
 
     @Column(name = "indice_glicemico", length = 10)
     private String indiceGlicemico;
@@ -47,4 +50,19 @@ public class Receita {
     @ManyToOne
     @JoinColumn(name = "id_categoria")
     private CategoriaReceita categoria;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (!(o instanceof Receita that))
+            return false;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
 }

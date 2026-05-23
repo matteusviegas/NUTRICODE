@@ -44,4 +44,5 @@ public class UsuarioDTO {
                 .senha(dto.getSenha())
                 .build();
     }
+
 }

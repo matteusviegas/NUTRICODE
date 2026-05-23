@@ -6,7 +6,9 @@ import br.com.challenge.nutricode.projectNutricode.domain.model.Usuario;
 import jakarta.validation.Valid;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+
 @Valid
 @Getter
 @Setter
@@ -19,7 +21,7 @@ public class HistoricoConsumoDTO {
     private Long usuarioId;
     private Long receitaId;
     private LocalDate dataConsumo;
-    private Double quantidade;
+    private BigDecimal quantidade;
 
     public static HistoricoConsumoDTO fromEntity(HistoricoConsumo entity) {
         return HistoricoConsumoDTO.builder()
@@ -52,4 +54,5 @@ public class HistoricoConsumoDTO {
 
         return entity;
     }
+
 }

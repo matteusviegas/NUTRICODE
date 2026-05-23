@@ -2,10 +2,12 @@ package br.com.challenge.nutricode.projectNutricode.service;
 
 import br.com.challenge.nutricode.projectNutricode.domain.model.Role;
 import br.com.challenge.nutricode.projectNutricode.domain.model.Usuario;
+import br.com.challenge.nutricode.projectNutricode.domain.model.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -13,7 +15,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UsuarioService {
 
-    private final br.com.challenge.nutricode.projectNutricode.domain.model.repository.UsuarioRepository usuarioRepository;
+    private final UsuarioRepository usuarioRepository;
     private final PasswordEncoder passwordEncoder;
 
     public Usuario salvar(Usuario usuario) {
@@ -21,9 +23,7 @@ public class UsuarioService {
             throw new RuntimeException("Email já cadastrado");
         }
 
-        if (usuario.getRole() == null) {
-            usuario.setRole(Role.ROLE_USER);
-        }
+        usuario.setRole(Role.ROLE_USER);
 
         usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
         return usuarioRepository.save(usuario);
@@ -45,15 +45,15 @@ public class UsuarioService {
         Usuario usuarioExistente = usuarioRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
 
+        if (!passwordEncoder.matches(usuario.getSenha(), usuarioExistente.getSenha())) {
+            throw new BadCredentialsException("Senha incorreta");
+        }
+
         usuarioExistente.setNome(usuario.getNome());
         usuarioExistente.setEmail(usuario.getEmail());
 
         if (usuario.getRole() != null) {
             usuarioExistente.setRole(usuario.getRole());
-        }
-
-        if (usuario.getSenha() != null && !usuario.getSenha().isBlank()) {
-            usuarioExistente.setSenha(passwordEncoder.encode(usuario.getSenha()));
         }
 
         return usuarioRepository.save(usuarioExistente);
@@ -66,4 +66,5 @@ public class UsuarioService {
     public boolean existsById(Long id) {
         return usuarioRepository.existsById(id);
     }
+
 }

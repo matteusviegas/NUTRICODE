@@ -1,5 +1,7 @@
 package br.com.challenge.nutricode.projectNutricode.domain.model;
 
+import java.util.Objects;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -30,4 +32,19 @@ public class AvaliacaoReceita {
     @ManyToOne
     @JoinColumn(name = "id_receita")
     private Receita receita;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (!(o instanceof AvaliacaoReceita that))
+            return false;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
 }

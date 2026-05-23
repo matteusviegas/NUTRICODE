@@ -31,4 +31,5 @@ public class ReceitaIngredienteService {
 
         return repository.save(entidade);
     }
+
 }
