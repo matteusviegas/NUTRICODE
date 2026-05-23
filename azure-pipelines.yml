@@ -31,7 +31,7 @@ stages:
             displayName: 'Publicar JAR'
 
             inputs:
-              targetPath: '$(System.DefaultWorkingDirectory)/target/*.jar'
+              targetPath: '$(System.DefaultWorkingDirectory)/target'
               artifact: 'jar-file'
 
   - stage: CD
