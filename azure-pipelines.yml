@@ -16,6 +16,7 @@ stages:
 
     jobs:
       - job: Build
+        displayName: 'Build'
 
         steps:
           - checkout: self
@@ -31,7 +32,7 @@ stages:
             displayName: 'Publicar JAR'
 
             inputs:
-              targetPath: '$(System.DefaultWorkingDirectory)/target/*.jar'
+              targetPath: '$(System.DefaultWorkingDirectory)/target'
               artifact: 'jar-file'
 
   - stage: CD
@@ -41,6 +42,7 @@ stages:
 
     jobs:
       - job: Deploy
+        displayName: 'Deploy'
 
         steps:
           - task: DownloadPipelineArtifact@2
@@ -54,7 +56,7 @@ stages:
             displayName: 'Deploy Azure App Service'
 
             inputs:
-              azureSubscription: '$(azureSubscription)'
+              azureSubscription: 'azure-nutricode-service-connection'
               appType: 'webAppLinux'
-              appName: '$(webAppName)'
+              appName: 'appservice-nutricode'
               package: '$(Pipeline.Workspace)/artifact/*.jar'
