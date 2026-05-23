@@ -56,7 +56,7 @@ stages:
             displayName: 'Deploy Azure App Service'
 
             inputs:
-              azureSubscription: 'azure-nutricode-service-connection'
+              azureSubscription: '$(azureSubscription)'
               appType: 'webAppLinux'
-              appName: 'appservice-nutricode'
+              appName: '$(webAppName)'
               package: '$(Pipeline.Workspace)/artifact/*.jar'
