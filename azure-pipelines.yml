@@ -6,10 +6,6 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-variables:
-  azureSubscription: 'azure-nutricode-service-connection'
-  webAppName: 'appservice-nutricode'
-
 stages:
   - stage: CI
     displayName: 'CI - Build'
@@ -52,11 +48,25 @@ stages:
               artifact: 'jar-file'
               path: '$(Pipeline.Workspace)/artifact'
 
-          - task: AzureWebApp@1
-            displayName: 'Deploy Azure App Service'
+          - script: |
+              set -e
 
-            inputs:
-              azureSubscription: '$(azureSubscription)'
-              appType: 'webAppLinux'
-              appName: '$(webAppName)'
-              package: '$(Pipeline.Workspace)/artifact/*.jar'
+              echo "Localizando JAR..."
+              JAR_FILE=$(find "$(Pipeline.Workspace)/artifact" -name "*.jar" | head -n 1)
+
+              echo "JAR encontrado:"
+              echo "$JAR_FILE"
+
+              echo "Enviando JAR para o App Service..."
+
+              curl -v --fail -X PUT "https://$PUBLISH_URL/api/vfs/site/wwwroot/app.jar" \
+                -u "$PUBLISH_USERNAME:$PUBLISH_PASSWORD" \
+                -H "If-Match: *" \
+                --data-binary @"$JAR_FILE"
+
+              echo "Upload finalizado."
+            displayName: 'Deploy direto do JAR'
+            env:
+              PUBLISH_URL: $(PUBLISH_URL)
+              PUBLISH_USERNAME: $(PUBLISH_USERNAME)
+              PUBLISH_PASSWORD: $(PUBLISH_PASSWORD)
