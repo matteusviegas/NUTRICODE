@@ -104,21 +104,81 @@ JWT_SECRET
 
 ## ▶️ Como Executar Localmente
 
+### Pré-requisitos:
+- Java 17
+- Maven
+- Acesso ao banco Oracle
+
+### Executar o projeto
+
+```text
+mvn clean package -DskipTests
+java -jar target/projectNutricode-0.0.1-SNAPSHOT.jar
+```
+
+### Domínio padrão para o uso da aplicação:
+
+```text
+appservice-nutricode3-dacrb3byhuhcfkes.brazilsouth-01.azurewebsites.net
+```
+
 ---
 
 ## 🔄 Endpoints Principais
 
+### Os endpoints podem ser acessados pelo Swagger ou Postman
+
+```text
+GET    /api/usuarios
+POST   /api/usuarios
+GET    /api/usuarios/{id}
+PUT    /api/usuarios/{id}
+DELETE /api/usuarios/{id}
+```
+
+### Outras rotas disponíveis:
+
+```text
+/api/receitas
+/api/categorias-receita
+/api/ingredientes
+/api/historicos-consumo
+/api/perfis
+/api/preferencias-alimentares
+/api/condicoes-medicas
+```
+
 ---
 
 ## 🧪 Exemplos JSON para Testes
 
----
-
-## 🔗 Links
-
----
-
-## 🧪 Exemplos JSON para Testes
+### Criar Usuário
+```text
+{
+  "nome": "Usuario Teste",
+  "email": "usuario.teste@email.com",
+  "senha": "123456"
+}
+```
+### Atualizar Usuário
+```text
+{
+  "nome": "Usuario Atualizado",
+  "email": "usuario.atualizado@email.com",
+  "senha": "123456"
+}
+```
+### Criar Receita
+```text
+{
+  "nome": "Frango com Batata Doce",
+  "descricao": "Receita rica em proteína",
+  "modoPreparo": "Grelhar o frango e cozinhar a batata doce",
+  "categoria": {
+    "id": 1
+  }
+}
+```
 
 ---
 
@@ -129,4 +189,3 @@ JWT_SECRET
 | RM560914 | Lucas Almeida de Siqueira  |
 | RM561090 | Matteus Viegas dos Santos  |
 | RM561089 | Sulamita Viegas dos Santos |
-
