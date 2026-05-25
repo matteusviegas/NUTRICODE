@@ -168,16 +168,53 @@ DELETE /api/usuarios/{id}
   "senha": "123456"
 }
 ```
+
+### Listar Usuário
+```text
+Método: GET
+/api/usuarios
+```
+
+### Deletar Usuário
+```text
+Método: DELETE 
+/api/usuarios/ID_AQUI
+```
+
 ### Criar Receita
 ```text
 {
   "nome": "Frango com Batata Doce",
-  "descricao": "Receita rica em proteína",
-  "modoPreparo": "Grelhar o frango e cozinhar a batata doce",
-  "categoria": {
-    "id": 1
-  }
+  "descricao": "Receita rica em proteína para dieta fitness",
+  "modoPreparo": "Grelhar o frango e cozinhar.",
+  "tempoPreparo": 30,
+  "valorCalorico": 450.00,
+  "proteinaTotal": 38.50,
+  "carboTotal": 42.00,
+  "gorduraTotal": 8.20,
+  "indiceGlicemico": "MEDIO",
+  "categoriaId": 1
 }
+```
+### Atualizar Receita
+```text
+{
+  "nome": "Usuario Atualizado",
+  "email": "usuario.atualizado@email.com",
+  "senha": "123456"
+}
+```
+
+### Listar Receita
+```text
+Método: GET
+/api/receitas
+```
+
+### Deletar Receita
+```text
+Método: DELETE 
+/api/receitas/ID_AQUI
 ```
 
 ---
